@@ -100,12 +100,13 @@ export default function PointsOfInterestPage() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8"> {/* Increased spacing */}
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-gray-900 bg-clip-text text-transparent bg-gradient-to-r from-primary-600 to-blue-600">Points d'intérêt</h1>
+        {/* h1 styled by globals.css */}
+        <h1 className="text-3xl font-bold">Points d'intérêt</h1>
         <Link href="/dashboard/points-of-interest/new">
           <Button 
-            variant="gradient" 
+            variant="primary" // Changed from gradient
             leftIcon={<PlusIcon className="h-5 w-5" />}
             glow
           >
@@ -116,16 +117,17 @@ export default function PointsOfInterestPage() {
 
       <Card>
         <CardHeader>
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
             <CardTitle>Liste des points d'intérêt</CardTitle>
-            <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2">
-                <label htmlFor="category" className="text-sm font-medium text-gray-700">
+            {/* Filters moved to a more prominent position or could be a separate filter component */}
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full md:w-auto">
+              <div className="flex items-center gap-2 w-full sm:w-auto">
+                <label htmlFor="category" className="text-sm font-medium text-secondary-700 whitespace-nowrap">
                   Catégorie:
                 </label>
                 <select
                   id="category"
-                  className="rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
+                  className="flex-grow rounded-lg border-secondary-300 bg-secondary-100 shadow-sm focus:border-primary-500 focus:ring-1 focus:ring-primary-500 sm:text-sm p-2"
                 >
                   {categories.map((category) => (
                     <option key={category.value} value={category.value}>
@@ -134,13 +136,13 @@ export default function PointsOfInterestPage() {
                   ))}
                 </select>
               </div>
-              <div className="flex items-center gap-2">
-                <label htmlFor="status" className="text-sm font-medium text-gray-700">
+              <div className="flex items-center gap-2 w-full sm:w-auto">
+                <label htmlFor="status" className="text-sm font-medium text-secondary-700 whitespace-nowrap">
                   Statut:
                 </label>
                 <select
                   id="status"
-                  className="rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
+                  className="flex-grow rounded-lg border-secondary-300 bg-secondary-100 shadow-sm focus:border-primary-500 focus:ring-1 focus:ring-primary-500 sm:text-sm p-2"
                 >
                   <option value="all">Tous</option>
                   <option value="active">Actifs</option>
@@ -154,50 +156,57 @@ export default function PointsOfInterestPage() {
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="border-b">
-                  <th className="py-3 text-left text-sm font-medium text-gray-500">Nom</th>
-                  <th className="py-3 text-left text-sm font-medium text-gray-500">Catégorie</th>
-                  <th className="py-3 text-left text-sm font-medium text-gray-500">Adresse</th>
-                  <th className="py-3 text-left text-sm font-medium text-gray-500">Vues</th>
-                  <th className="py-3 text-left text-sm font-medium text-gray-500">J'aimes</th>
-                  <th className="py-3 text-left text-sm font-medium text-gray-500">Statut</th>
-                  <th className="py-3 text-left text-sm font-medium text-gray-500">Actions</th>
+                <tr className="border-b border-secondary-300">
+                  <th className="py-3.5 px-3 text-left text-xs font-semibold uppercase text-secondary-600">Nom</th>
+                  <th className="py-3.5 px-3 text-left text-xs font-semibold uppercase text-secondary-600">Catégorie</th>
+                  <th className="py-3.5 px-3 text-left text-xs font-semibold uppercase text-secondary-600">Adresse</th>
+                  <th className="py-3.5 px-3 text-left text-xs font-semibold uppercase text-secondary-600">Vues</th>
+                  <th className="py-3.5 px-3 text-left text-xs font-semibold uppercase text-secondary-600">J'aimes</th>
+                  <th className="py-3.5 px-3 text-center text-xs font-semibold uppercase text-secondary-600">Statut</th>
+                  <th className="py-3.5 px-3 text-left text-xs font-semibold uppercase text-secondary-600">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {pointsOfInterest.map((poi) => (
-                  <tr key={poi.id} className="border-b hover:bg-gray-50">
-                    <td className="py-4 text-sm text-gray-900">
+                  <tr key={poi.id} className="border-b border-secondary-200 hover:bg-secondary-100/50 transition-colors">
+                    <td className="py-4 px-3 text-sm text-secondary-900">
                       <div className="flex items-center">
-                        <MapPinIcon className="h-5 w-5 text-primary-500 mr-2" />
+                        <MapPinIcon className="h-5 w-5 text-primary-500 mr-2.5 flex-shrink-0" />
                         <span className="font-medium">{poi.name}</span>
                       </div>
                     </td>
-                    <td className="py-4 text-sm text-gray-500">
-                      <Badge variant={poi.category === 'Monument' ? 'primary' : 'secondary'}>
+                    <td className="py-4 px-3 text-sm text-secondary-600">
+                      {/* Using Badge component with appropriate variants */}
+                      <Badge
+                        variant={poi.category === 'Monument' ? 'primary' :
+                                 poi.category === 'Musée' ? 'info' :
+                                 poi.category === 'Religieux' ? 'warning' :
+                                 'default'}
+                        size="md"
+                      >
                         {poi.category}
                       </Badge>
                     </td>
-                    <td className="py-4 text-sm text-gray-500 max-w-xs truncate">
+                    <td className="py-4 px-3 text-sm text-secondary-600 max-w-xs truncate">
                       {poi.location.address}
                     </td>
-                    <td className="py-4 text-sm text-gray-500">{poi.views.toLocaleString()}</td>
-                    <td className="py-4 text-sm text-gray-500">{poi.likes.toLocaleString()}</td>
-                    <td className="py-4 text-sm">
+                    <td className="py-4 px-3 text-sm text-secondary-600">{poi.views.toLocaleString()}</td>
+                    <td className="py-4 px-3 text-sm text-secondary-600">{poi.likes.toLocaleString()}</td>
+                    <td className="py-4 px-3 text-sm text-center">
                       <Switch
                         checked={poi.isActive}
                         onChange={() => handleToggleStatus(poi.id)}
-                        size="sm"
+                        size="sm" // Using the updated Switch
                       />
                     </td>
-                    <td className="py-4 text-sm">
-                      <div className="flex items-center gap-2">
+                    <td className="py-4 px-3 text-sm">
+                      <div className="flex items-center gap-2.5">
                         <Link href={`/dashboard/points-of-interest/${poi.id}`}>
                           <Button
-                            variant="primary"
+                            variant="outline" // Changed to outline for a cleaner look
                             size="sm"
                             leftIcon={<PencilIcon className="h-4 w-4" />}
-                            className="bg-blue-500 hover:bg-blue-600"
+                            // Removed specific blue class, rely on variant
                           >
                             Éditer
                           </Button>
@@ -216,15 +225,16 @@ export default function PointsOfInterestPage() {
               </tbody>
             </table>
           </div>
-          <div className="mt-4 flex items-center justify-between">
-            <div className="text-sm text-gray-500">
+          {/* Pagination - styled with theme colors */}
+          <div className="mt-6 flex items-center justify-between">
+            <div className="text-sm text-secondary-600">
               Affichage de {pointsOfInterest.length} points d'intérêt sur {pointsOfInterest.length}
             </div>
             <div className="flex items-center gap-2">
               <Button variant="outline" size="sm" disabled>
                 Précédent
               </Button>
-              <Button variant="outline" size="sm" disabled>
+              <Button variant="outline" size="sm"> {/* Assuming there's a next page for demo */}
                 Suivant
               </Button>
             </div>

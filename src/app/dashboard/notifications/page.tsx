@@ -51,88 +51,91 @@ export default function NotificationsPage() {
   ];
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8"> {/* Increased spacing */}
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-gray-900">Notifications</h1>
+        {/* h1 styled by globals.css */}
+        <h1 className="text-3xl font-bold">Notifications</h1>
         <Link href="/dashboard/notifications/new">
-          <Button leftIcon={<PlusIcon className="h-5 w-5" />}>
+          <Button variant="primary" leftIcon={<PlusIcon className="h-5 w-5" />}> {/* Themed button */}
             Nouvelle notification
           </Button>
         </Link>
       </div>
 
+      {/* Quick Notification Card - Modernized Form */}
       <Card>
         <CardHeader>
-          <div className="flex items-center justify-between">
-            <CardTitle>Envoyer une notification rapide</CardTitle>
-          </div>
+          <CardTitle>Envoyer une notification rapide</CardTitle>
         </CardHeader>
         <CardContent>
-          <form className="space-y-4">
+          <form className="space-y-5"> {/* Increased spacing in form */}
             <div>
-              <label htmlFor="title" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="title" className="block text-sm font-medium text-secondary-700 mb-1">
                 Titre
               </label>
               <input
                 type="text"
                 id="title"
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
+                className="mt-1 block w-full rounded-lg border-secondary-300 bg-secondary-100 shadow-sm focus:border-primary-500 focus:ring-1 focus:ring-primary-500 sm:text-sm p-2.5"
                 placeholder="Titre de la notification"
               />
             </div>
             <div>
-              <label htmlFor="message" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="message" className="block text-sm font-medium text-secondary-700 mb-1">
                 Message
               </label>
               <textarea
                 id="message"
-                rows={3}
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
+                rows={4} // Slightly more rows
+                className="mt-1 block w-full rounded-lg border-secondary-300 bg-secondary-100 shadow-sm focus:border-primary-500 focus:ring-1 focus:ring-primary-500 sm:text-sm p-2.5"
                 placeholder="Contenu de la notification"
               ></textarea>
             </div>
-            <div>
-              <label htmlFor="recipients" className="block text-sm font-medium text-gray-700">
-                Destinataires
-              </label>
-              <select
-                id="recipients"
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
-              >
-                <option value="all">Tous les utilisateurs</option>
-                <option value="active">Utilisateurs actifs</option>
-                <option value="inactive">Utilisateurs inactifs</option>
-                <option value="custom">Sélection personnalisée</option>
-              </select>
-            </div>
-            <div>
-              <label htmlFor="type" className="block text-sm font-medium text-gray-700">
-                Type
-              </label>
-              <select
-                id="type"
-                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
-              >
-                <option value="info">Information</option>
-                <option value="success">Succès</option>
-                <option value="warning">Avertissement</option>
-                <option value="error">Erreur</option>
-              </select>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+              <div>
+                <label htmlFor="recipients" className="block text-sm font-medium text-secondary-700 mb-1">
+                  Destinataires
+                </label>
+                <select
+                  id="recipients"
+                  className="mt-1 block w-full rounded-lg border-secondary-300 bg-secondary-100 shadow-sm focus:border-primary-500 focus:ring-1 focus:ring-primary-500 sm:text-sm p-2.5"
+                >
+                  <option value="all">Tous les utilisateurs</option>
+                  <option value="active">Utilisateurs actifs</option>
+                  <option value="inactive">Utilisateurs inactifs</option>
+                  <option value="custom">Sélection personnalisée</option>
+                </select>
+              </div>
+              <div>
+                <label htmlFor="type" className="block text-sm font-medium text-secondary-700 mb-1">
+                  Type
+                </label>
+                <select
+                  id="type"
+                  className="mt-1 block w-full rounded-lg border-secondary-300 bg-secondary-100 shadow-sm focus:border-primary-500 focus:ring-1 focus:ring-primary-500 sm:text-sm p-2.5"
+                >
+                  <option value="info">Information (Bleu)</option>
+                  <option value="success">Succès (Vert)</option>
+                  <option value="warning">Avertissement (Jaune)</option>
+                  <option value="danger">Erreur (Rouge)</option> {/* Changed from error to danger to match Badge */}
+                </select>
+              </div>
             </div>
           </form>
         </CardContent>
-        <CardFooter className="flex justify-end">
+        <CardFooter className="flex justify-end pt-5"> {/* Added pt for spacing */}
           <Button 
-            variant="gradient" 
+            variant="primary" // Changed from gradient
             leftIcon={<PaperAirplaneIcon className="h-5 w-5" />}
-            className="bg-gradient-to-r from-primary-500 via-blue-500 to-primary-600 hover:from-primary-600 hover:via-blue-600 hover:to-primary-700 px-6 py-2.5"
             glow
+            size="lg" // Larger button
           >
             Envoyer la notification
           </Button>
         </CardFooter>
       </Card>
 
+      {/* Notification History Table - Modernized */}
       <Card>
         <CardHeader>
           <CardTitle>Historique des notifications</CardTitle>
@@ -141,46 +144,33 @@ export default function NotificationsPage() {
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="border-b">
-                  <th className="py-3 text-left text-sm font-medium text-gray-500">Titre</th>
-                  <th className="py-3 text-left text-sm font-medium text-gray-500">Type</th>
-                  <th className="py-3 text-left text-sm font-medium text-gray-500">Destinataires</th>
-                  <th className="py-3 text-left text-sm font-medium text-gray-500">Date d'envoi</th>
-                  <th className="py-3 text-left text-sm font-medium text-gray-500">Taux de lecture</th>
-                  <th className="py-3 text-left text-sm font-medium text-gray-500">Actions</th>
+                <tr className="border-b border-secondary-300">
+                  <th className="py-3.5 px-3 text-left text-xs font-semibold uppercase text-secondary-600">Titre</th>
+                  <th className="py-3.5 px-3 text-left text-xs font-semibold uppercase text-secondary-600">Type</th>
+                  <th className="py-3.5 px-3 text-left text-xs font-semibold uppercase text-secondary-600">Destinataires</th>
+                  <th className="py-3.5 px-3 text-left text-xs font-semibold uppercase text-secondary-600">Date d'envoi</th>
+                  <th className="py-3.5 px-3 text-left text-xs font-semibold uppercase text-secondary-600">Taux de lecture</th>
+                  <th className="py-3.5 px-3 text-left text-xs font-semibold uppercase text-secondary-600">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {notifications.map((notification) => (
-                  <tr key={notification.id} className="border-b hover:bg-gray-50">
-                    <td className="py-4 text-sm">
+                  <tr key={notification.id} className="border-b border-secondary-200 hover:bg-secondary-100/50 transition-colors">
+                    <td className="py-4 px-3 text-sm">
                       <div className="flex items-center">
-                        <BellIcon className="h-5 w-5 text-gray-400 mr-2" />
-                        <span className="font-medium text-gray-900">{notification.title}</span>
+                        <BellIcon className="h-5 w-5 text-primary-500 mr-2.5 flex-shrink-0" />
+                        <span className="font-medium text-secondary-900">{notification.title}</span>
                       </div>
                     </td>
-                    <td className="py-4 text-sm">
+                    <td className="py-4 px-3 text-sm">
                       <Badge
-                        variant={
-                          notification.type === 'info'
-                            ? 'info'
-                            : notification.type === 'success'
-                            ? 'success'
-                            : notification.type === 'warning'
-                            ? 'warning'
-                            : 'danger'
-                        }
+                        variant={notification.type as ('info' | 'success' | 'warning' | 'danger')} // Cast to Badge variant type
+                        size="md"
                       >
-                        {notification.type === 'info'
-                          ? 'Information'
-                          : notification.type === 'success'
-                          ? 'Succès'
-                          : notification.type === 'warning'
-                          ? 'Avertissement'
-                          : 'Erreur'}
+                        {notification.type.charAt(0).toUpperCase() + notification.type.slice(1)}
                       </Badge>
                     </td>
-                    <td className="py-4 text-sm text-gray-500">
+                    <td className="py-4 px-3 text-sm text-secondary-600">
                       {notification.recipients === 'all'
                         ? 'Tous les utilisateurs'
                         : notification.recipients === 'active'
@@ -189,25 +179,25 @@ export default function NotificationsPage() {
                         ? 'Utilisateurs inactifs'
                         : 'Sélection personnalisée'}
                     </td>
-                    <td className="py-4 text-sm text-gray-500">{notification.sentAt}</td>
-                    <td className="py-4 text-sm text-gray-500">
+                    <td className="py-4 px-3 text-sm text-secondary-600">{notification.sentAt}</td>
+                    <td className="py-4 px-3 text-sm text-secondary-600">
                       <div className="flex items-center">
-                        <div className="w-full bg-gray-200 rounded-full h-2.5 mr-2">
+                        <div className="w-full bg-secondary-200 rounded-full h-2.5 mr-2">
                           <div
-                            className="bg-primary-600 h-2.5 rounded-full"
+                            className="bg-primary-500 h-2.5 rounded-full" // Themed progress bar
                             style={{ width: `${(notification.readCount / notification.totalRecipients) * 100}%` }}
                           ></div>
                         </div>
-                        <span>
+                        <span className="text-xs font-medium">
                           {Math.round((notification.readCount / notification.totalRecipients) * 100)}%
                         </span>
                       </div>
-                      <div className="text-xs text-gray-500 mt-1">
+                      <div className="text-xs text-secondary-500 mt-1">
                         {notification.readCount} sur {notification.totalRecipients}
                       </div>
                     </td>
-                    <td className="py-4 text-sm">
-                      <div className="flex items-center gap-2">
+                    <td className="py-4 px-3 text-sm">
+                      <div className="flex items-center gap-2.5">
                         <Button
                           variant="outline"
                           size="sm"
@@ -218,7 +208,8 @@ export default function NotificationsPage() {
                         <Button
                           variant="ghost"
                           size="sm"
-                          leftIcon={<TrashIcon className="h-4 w-4 text-red-500" />}
+                          className="text-red-600 hover:bg-red-500/10" // Danger action
+                          leftIcon={<TrashIcon className="h-4 w-4" />}
                         >
                           Supprimer
                         </Button>

@@ -27,76 +27,81 @@ const SidebarLink: React.FC<SidebarLinkProps> = ({ href, icon, label, active }) 
     <Link
       href={href}
       className={cn(
-        'flex items-center gap-3 rounded-lg px-3 py-2 transition-all hover:text-primary-900 hover:bg-primary-50',
-        active ? 'bg-primary-50 text-primary-900' : 'text-secondary-600'
+        'flex items-center gap-3 rounded-lg px-3 py-2.5 transition-all duration-150 ease-in-out group', // Increased py, added group
+        active
+          ? 'bg-primary-500 text-primary-foreground shadow-md shadow-primary-500/30' // Active: Purple bg, white text, purple shadow
+          : 'text-secondary-700 hover:text-primary-500 hover:bg-primary-500/10', // Inactive: Dark gray text, hover: purple text, light purple bg
+        label === '' ? 'justify-center' : '' // Center icon when label is hidden (collapsed)
       )}
     >
-      <div className="w-6 h-6">{icon}</div>
-      <span className="font-medium">{label}</span>
+      <div className={cn("w-5 h-5", active ? "text-primary-foreground" : "text-secondary-600 group-hover:text-primary-500")}>{icon}</div> {/* Slightly smaller icons, color adapts */}
+      {!collapsed && <span className="font-medium text-sm">{label}</span>} {/* Smaller font */}
     </Link>
   );
 };
 
 export default function Sidebar() {
   const pathname = usePathname();
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(false); // Default to not collapsed
 
   const navLinks = [
     {
       href: '/dashboard',
-      icon: <HomeIcon className="w-6 h-6" />,
+      icon: <HomeIcon className="w-full h-full" />, // Use full for parent div to control size
       label: 'Tableau de bord',
     },
     {
       href: '/dashboard/points-of-interest',
-      icon: <MapIcon className="w-6 h-6" />,
+      icon: <MapIcon className="w-full h-full" />,
       label: 'Points d\'intérêt',
     },
     {
       href: '/dashboard/users',
-      icon: <UserGroupIcon className="w-6 h-6" />,
+      icon: <UserGroupIcon className="w-full h-full" />,
       label: 'Utilisateurs',
     },
     {
       href: '/dashboard/statistics',
-      icon: <ChartBarIcon className="w-6 h-6" />,
+      icon: <ChartBarIcon className="w-full h-full" />,
       label: 'Statistiques',
     },
     {
       href: '/dashboard/notifications',
-      icon: <BellIcon className="w-6 h-6" />,
+      icon: <BellIcon className="w-full h-full" />,
       label: 'Notifications',
     },
     {
       href: '/dashboard/chat',
-      icon: <ChatBubbleLeftRightIcon className="w-6 h-6" />,
+      icon: <ChatBubbleLeftRightIcon className="w-full h-full" />,
       label: 'Messages',
     },
-    {
-      href: '/dashboard/settings',
-      icon: <Cog6ToothIcon className="w-6 h-6" />,
-      label: 'Paramètres',
-    },
+    // Settings link removed as per typical modern dashboard design (often in user dropdown)
+    // {
+    //   href: '/dashboard/settings',
+    //   icon: <Cog6ToothIcon className="w-full h-full" />,
+    //   label: 'Paramètres',
+    // },
   ];
 
   return (
     <aside
       className={cn(
-        'fixed left-0 top-0 z-40 h-screen bg-white border-r border-gray-200 transition-all duration-300',
-        collapsed ? 'w-20' : 'w-64'
+        'fixed left-0 top-0 z-40 h-screen bg-secondary-50 border-r border-secondary-300 shadow-lg transition-width duration-300 ease-in-out', // Theme colors, shadow
+        collapsed ? 'w-20' : 'w-64' // Adjusted collapsed width
       )}
     >
-      <div className="h-full flex flex-col justify-between py-5">
+      <div className="h-full flex flex-col justify-between py-6"> {/* Increased py */}
         <div>
-          <div className="flex items-center justify-between px-4 mb-6">
+          {/* Logo and Collapse Button */}
+          <div className={cn("flex items-center mb-8 px-4", collapsed ? "justify-center" : "justify-between")}>
             {!collapsed && (
-              <Link href="/dashboard" className="text-2xl font-bold text-primary-600">
-                PoI Admin
+              <Link href="/dashboard" className="text-2xl font-bold text-primary-500"> {/* Purple logo text */}
+                PoI
               </Link>
             )}
             <button
               onClick={() => setCollapsed(!collapsed)}
-              className="p-2 rounded-lg hover:bg-gray-100"
+              className="p-2 rounded-lg text-secondary-600 hover:bg-secondary-200 transition-colors"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

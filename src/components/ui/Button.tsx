@@ -31,35 +31,36 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     ref
   ) => {
     const variantClasses = {
-      primary: 'bg-primary-600 text-white hover:bg-primary-700 focus:ring-primary-500 hover:shadow-lg hover:shadow-primary-500/30 active:scale-[0.98] transition-all duration-200',
-      secondary: 'bg-secondary-100 text-secondary-900 hover:bg-secondary-200 focus:ring-secondary-500 hover:shadow-md active:scale-[0.98] transition-all duration-200',
-      outline: 'bg-transparent border border-gray-300 text-gray-700 hover:bg-gray-50 focus:ring-gray-500 hover:border-gray-400 active:scale-[0.98] transition-all duration-200',
-      ghost: 'bg-transparent text-gray-700 hover:bg-gray-100 focus:ring-gray-500 active:scale-[0.98] transition-all duration-200',
-      danger: 'bg-gradient-to-r from-red-500 to-red-600 text-white hover:from-red-600 hover:to-red-700 focus:ring-red-500 hover:shadow-lg hover:shadow-red-500/30 active:scale-[0.98] transition-all duration-200',
-      success: 'bg-gradient-to-r from-green-500 to-emerald-600 text-white hover:from-green-600 hover:to-emerald-700 focus:ring-green-500 hover:shadow-lg hover:shadow-green-500/30 active:scale-[0.98] transition-all duration-200',
-      gradient: 'bg-gradient-to-r from-primary-500 via-purple-500 to-pink-500 text-white hover:from-primary-600 hover:via-purple-600 hover:to-pink-600 focus:ring-primary-500 hover:shadow-lg hover:shadow-primary-500/30 active:scale-[0.98] transition-all duration-200',
+      primary: 'bg-primary-500 text-primary-foreground hover:bg-primary-600 focus-visible:ring-primary-500 shadow-sm hover:shadow-md active:scale-[0.99] transition-all duration-150',
+      secondary: 'bg-secondary-200 text-secondary-900 hover:bg-secondary-300 focus-visible:ring-secondary-500 shadow-sm hover:shadow-md active:scale-[0.99] transition-all duration-150',
+      outline: 'bg-transparent border border-secondary-400 text-secondary-700 hover:bg-secondary-100 focus-visible:ring-secondary-500 hover:border-secondary-500 active:scale-[0.99] transition-all duration-150',
+      ghost: 'bg-transparent text-secondary-700 hover:bg-secondary-200 focus-visible:ring-secondary-500 active:scale-[0.99] transition-all duration-150',
+      danger: 'bg-red-500 text-white hover:bg-red-600 focus-visible:ring-red-500 shadow-sm hover:shadow-md active:scale-[0.99] transition-all duration-150',
+      success: 'bg-green-500 text-white hover:bg-green-600 focus-visible:ring-green-500 shadow-sm hover:shadow-md active:scale-[0.99] transition-all duration-150',
+      // Removing gradient variant as per "Evitons les dégradés de couleur"
+      // gradient: 'bg-gradient-to-r from-primary-500 via-purple-500 to-pink-500 text-white hover:from-primary-600 hover:via-purple-600 hover:to-pink-600 focus:ring-primary-500 hover:shadow-lg hover:shadow-primary-500/30 active:scale-[0.98] transition-all duration-200',
     };
 
     const sizeClasses = {
-      sm: 'text-xs px-2.5 py-1.5 rounded-md',
-      md: 'text-sm px-4 py-2 rounded-md',
-      lg: 'text-base px-6 py-3 rounded-lg',
+      sm: 'text-xs px-3 py-1.5 rounded-lg', // Increased padding and rounded-lg
+      md: 'text-sm px-4 py-2 rounded-lg',  // Rounded-lg
+      lg: 'text-base px-6 py-3 rounded-xl', // Rounded-xl for larger buttons
     };
 
     return (
       <button
         className={cn(
-          'inline-flex items-center justify-center font-medium transition-all',
-          'focus:outline-none focus:ring-2 focus:ring-offset-2',
+          'inline-flex items-center justify-center font-semibold', // Changed to font-semibold
+          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background', // Modern focus rings
           variantClasses[variant],
           sizeClasses[size],
-          glow && variant === 'primary' && 'shadow-lg shadow-primary-500/50',
-          glow && variant === 'danger' && 'shadow-lg shadow-red-500/50',
-          glow && variant === 'success' && 'shadow-lg shadow-green-500/50',
-          glow && variant === 'gradient' && 'shadow-lg shadow-purple-500/50',
+          glow && variant === 'primary' && 'shadow-lg shadow-primary-500/40', // Adjusted glow
+          glow && variant === 'danger' && 'shadow-lg shadow-red-500/40',
+          glow && variant === 'success' && 'shadow-lg shadow-green-500/40',
+          // glow && variant === 'gradient' && 'shadow-lg shadow-purple-500/50', // Gradient removed
           pulse && 'animate-pulse',
-          isLoading && 'opacity-70 cursor-not-allowed',
-          disabled && 'opacity-50 cursor-not-allowed',
+          isLoading && 'opacity-75 cursor-not-allowed',
+          disabled && 'opacity-60 cursor-not-allowed',
           className
         )}
         disabled={disabled || isLoading}

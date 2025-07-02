@@ -11,26 +11,26 @@ interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
 const Badge = React.forwardRef<HTMLSpanElement, BadgeProps>(
   ({ className, variant = 'default', size = 'md', children, ...props }, ref) => {
     const variantClasses = {
-      default: 'bg-gray-100 text-gray-800',
-      primary: 'bg-primary-100 text-primary-800',
-      secondary: 'bg-secondary-100 text-secondary-800',
-      success: 'bg-green-100 text-green-800',
-      warning: 'bg-yellow-100 text-yellow-800',
-      danger: 'bg-red-100 text-red-800',
-      info: 'bg-blue-100 text-blue-800',
+      default: 'bg-secondary-200 text-secondary-800', // Light gray background, dark gray text
+      primary: 'bg-primary-500 text-primary-foreground', // Purple background, white text
+      secondary: 'bg-secondary-300 text-secondary-900', // Medium gray background, black text
+      success: 'bg-green-500 text-white',
+      warning: 'bg-yellow-500 text-white',
+      danger: 'bg-red-500 text-white',
+      info: 'bg-blue-500 text-white',
     };
 
     const sizeClasses = {
-      sm: 'text-xs px-2 py-0.5',
-      md: 'text-sm px-2.5 py-0.5',
-      lg: 'text-base px-3 py-1',
+      sm: 'text-xs px-2.5 py-1', // Slightly more padding
+      md: 'text-sm px-3 py-1.5',
+      lg: 'text-base px-3.5 py-2',
     };
 
     return (
       <span
         ref={ref}
         className={cn(
-          'inline-flex items-center rounded-full font-medium',
+          'inline-flex items-center rounded-lg font-semibold', // Changed to rounded-lg and font-semibold
           variantClasses[variant],
           sizeClasses[size],
           className

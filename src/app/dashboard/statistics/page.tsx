@@ -66,12 +66,68 @@ export default function StatisticsPage() {
     { name: 'Montmartre', views: 7654, likes: 5432, category: 'Quartier' },
   ];
 
+  // Update chart colors to match the new theme
+  const primaryColor = '#8b5cf6'; // primary-500
+  const primaryColorTransparent = 'rgba(139, 92, 246, 0.5)';
+  const secondaryTextColor = '#4a5568'; // secondary-700 (for labels, etc.)
+  const gridColor = '#e2e8f0'; // secondary-300 (for chart grid lines)
+
+  const updatedMonthlyViews = {
+    ...monthlyViews,
+    datasets: monthlyViews.datasets.map(ds => ({
+      ...ds,
+      backgroundColor: primaryColorTransparent,
+      borderColor: primaryColor,
+      pointBackgroundColor: primaryColor,
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: primaryColor,
+    })),
+  };
+
+  const updatedUserActivity = {
+    ...userActivity,
+    datasets: userActivity.datasets.map((ds, index) => ({
+      ...ds,
+      backgroundColor: index === 0 ? 'rgba(74, 222, 128, 0.5)' : 'rgba(251, 191, 36, 0.5)', // green-400, yellow-400
+      borderColor: index === 0 ? '#4ade80' : '#facc15',
+      pointBackgroundColor: index === 0 ? '#4ade80' : '#facc15',
+      pointBorderColor: '#fff',
+      pointHoverBackgroundColor: '#fff',
+      pointHoverBorderColor: index === 0 ? '#4ade80' : '#facc15',
+    })),
+  };
+
+  const updatedPopularityByCategory = {
+    ...popularityByCategory,
+    datasets: popularityByCategory.datasets.map((ds, index) => ({
+      ...ds,
+      backgroundColor: index === 0 ? primaryColorTransparent : 'rgba(239, 68, 68, 0.4)', // primary-500, red-500/40
+      borderColor: index === 0 ? primaryColor : 'rgba(239, 68, 68, 0.7)',
+      borderWidth: 1,
+      hoverBackgroundColor: index === 0 ? 'rgba(139, 92, 246, 0.7)' : 'rgba(239, 68, 68, 0.6)',
+      hoverBorderColor: index === 0 ? primaryColor : 'rgb(239, 68, 68)',
+    })),
+  };
+
+  // Pie chart colors - can be an array of purples, grays, and other accent colors
+  const pieChartColors = [
+    '#8b5cf6', // primary-500
+    '#a78bfa', // primary-400
+    '#c4b5fd', // primary-300
+    '#718096', // secondary-600
+    '#a0aec0', // secondary-500
+    '#cbd5e1', // secondary-400
+  ];
+
+
   return (
-    <div className="space-y-6">
+    <div className="space-y-8"> {/* Increased spacing */}
       <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary-600 via-purple-600 to-blue-600">Statistiques</h1>
+        {/* h1 styled by globals.css */}
+        <h1 className="text-3xl font-bold">Statistiques</h1>
         <Button 
-          variant="success" 
+          variant="primary" // Changed from success, as success is now green, primary is purple
           leftIcon={<ArrowDownTrayIcon className="h-5 w-5" />}
           glow
         >
@@ -79,55 +135,44 @@ export default function StatisticsPage() {
         </Button>
       </div>
 
+      {/* Stat Cards - Themed */}
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-4">
-        <Card>
-          <CardContent className="p-6">
-            <div className="flex flex-col">
-              <span className="text-sm font-medium text-gray-500">Total des points d'intérêt</span>
-              <span className="text-3xl font-bold text-gray-900 mt-2">245</span>
-              <span className="text-sm text-green-600 mt-1">+12% depuis le mois dernier</span>
-            </div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="p-6">
-            <div className="flex flex-col">
-              <span className="text-sm font-medium text-gray-500">Total des utilisateurs</span>
-              <span className="text-3xl font-bold text-gray-900 mt-2">1,234</span>
-              <span className="text-sm text-green-600 mt-1">+5.2% depuis le mois dernier</span>
-            </div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="p-6">
-            <div className="flex flex-col">
-              <span className="text-sm font-medium text-gray-500">Vues totales</span>
-              <span className="text-3xl font-bold text-gray-900 mt-2">54.3K</span>
-              <span className="text-sm text-green-600 mt-1">+18.7% depuis le mois dernier</span>
-            </div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardContent className="p-6">
-            <div className="flex flex-col">
-              <span className="text-sm font-medium text-gray-500">J'aimes totaux</span>
-              <span className="text-3xl font-bold text-gray-900 mt-2">32.1K</span>
-              <span className="text-sm text-green-600 mt-1">+14.3% depuis le mois dernier</span>
-            </div>
-          </CardContent>
-        </Card>
+        {[
+          { title: "Total des points d'intérêt", value: "245", change: "+12%", changeColor: "text-green-600" },
+          { title: "Total des utilisateurs", value: "1,234", change: "+5.2%", changeColor: "text-green-600" },
+          { title: "Vues totales", value: "54.3K", change: "+18.7%", changeColor: "text-green-600" },
+          { title: "J'aimes totaux", value: "32.1K", change: "+14.3%", changeColor: "text-green-600" },
+        ].map((stat, index) => (
+          <Card key={index}>
+            <CardContent className="p-6">
+              <div className="flex flex-col">
+                <span className="text-sm font-medium text-secondary-600">{stat.title}</span>
+                <span className="text-3xl font-bold text-secondary-900 mt-2">{stat.value}</span>
+                <span className={`text-sm font-semibold mt-1 ${stat.changeColor}`}>{stat.change} depuis le mois dernier</span>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
       </div>
 
-      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
+      {/* Charts - Apply theme colors */}
+      <div className="grid grid-cols-1 gap-8 lg:grid-cols-2"> {/* Increased gap */}
         <Card>
           <CardHeader>
             <CardTitle>Vues mensuelles</CardTitle>
           </CardHeader>
           <CardContent>
             <LineChart
-              labels={monthlyViews.labels}
-              datasets={monthlyViews.datasets}
+              labels={updatedMonthlyViews.labels}
+              datasets={updatedMonthlyViews.datasets}
               height={300}
+              options={{
+                scales: {
+                  y: { ticks: { color: secondaryTextColor }, grid: { color: gridColor } },
+                  x: { ticks: { color: secondaryTextColor }, grid: { color: gridColor } }
+                },
+                plugins: { legend: { labels: { color: secondaryTextColor } } }
+              }}
             />
           </CardContent>
         </Card>
@@ -140,7 +185,9 @@ export default function StatisticsPage() {
             <PieChart
               labels={categoryDistribution.labels}
               data={categoryDistribution.data}
+              backgroundColor={pieChartColors} // Pass themed colors
               height={300}
+              options={{ plugins: { legend: { labels: { color: secondaryTextColor } } } }}
             />
           </CardContent>
         </Card>
@@ -152,9 +199,16 @@ export default function StatisticsPage() {
         </CardHeader>
         <CardContent>
           <LineChart
-            labels={userActivity.labels}
-            datasets={userActivity.datasets}
+            labels={updatedUserActivity.labels}
+            datasets={updatedUserActivity.datasets}
             height={300}
+            options={{
+              scales: {
+                y: { ticks: { color: secondaryTextColor }, grid: { color: gridColor } },
+                x: { ticks: { color: secondaryTextColor }, grid: { color: gridColor } }
+              },
+              plugins: { legend: { labels: { color: secondaryTextColor } } }
+            }}
           />
         </CardContent>
       </Card>
@@ -165,9 +219,16 @@ export default function StatisticsPage() {
         </CardHeader>
         <CardContent>
           <BarChart
-            labels={popularityByCategory.labels}
-            datasets={popularityByCategory.datasets}
+            labels={updatedPopularityByCategory.labels}
+            datasets={updatedPopularityByCategory.datasets}
             height={300}
+            options={{
+              scales: {
+                y: { ticks: { color: secondaryTextColor }, grid: { color: gridColor } },
+                x: { ticks: { color: secondaryTextColor }, grid: { color: gridColor } }
+              },
+              plugins: { legend: { labels: { color: secondaryTextColor } } }
+            }}
           />
         </CardContent>
       </Card>
@@ -180,22 +241,22 @@ export default function StatisticsPage() {
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="border-b">
-                  <th className="py-3 text-left text-sm font-medium text-gray-500">Nom</th>
-                  <th className="py-3 text-left text-sm font-medium text-gray-500">Catégorie</th>
-                  <th className="py-3 text-left text-sm font-medium text-gray-500">Vues</th>
-                  <th className="py-3 text-left text-sm font-medium text-gray-500">J'aimes</th>
-                  <th className="py-3 text-left text-sm font-medium text-gray-500">Taux d'engagement</th>
+                <tr className="border-b border-secondary-300">
+                  <th className="py-3.5 px-3 text-left text-xs font-semibold uppercase text-secondary-600">Nom</th>
+                  <th className="py-3.5 px-3 text-left text-xs font-semibold uppercase text-secondary-600">Catégorie</th>
+                  <th className="py-3.5 px-3 text-left text-xs font-semibold uppercase text-secondary-600">Vues</th>
+                  <th className="py-3.5 px-3 text-left text-xs font-semibold uppercase text-secondary-600">J'aimes</th>
+                  <th className="py-3.5 px-3 text-left text-xs font-semibold uppercase text-secondary-600">Taux d'engagement</th>
                 </tr>
               </thead>
               <tbody>
                 {topPOIs.map((poi, index) => (
-                  <tr key={index} className="border-b hover:bg-gray-50">
-                    <td className="py-4 text-sm font-medium text-gray-900">{poi.name}</td>
-                    <td className="py-4 text-sm text-gray-500">{poi.category}</td>
-                    <td className="py-4 text-sm text-gray-500">{poi.views.toLocaleString()}</td>
-                    <td className="py-4 text-sm text-gray-500">{poi.likes.toLocaleString()}</td>
-                    <td className="py-4 text-sm text-gray-500">
+                  <tr key={index} className="border-b border-secondary-200 hover:bg-secondary-100/50 transition-colors">
+                    <td className="py-4 px-3 text-sm font-medium text-secondary-900">{poi.name}</td>
+                    <td className="py-4 px-3 text-sm text-secondary-600">{poi.category}</td>
+                    <td className="py-4 px-3 text-sm text-secondary-600">{poi.views.toLocaleString()}</td>
+                    <td className="py-4 px-3 text-sm text-secondary-600">{poi.likes.toLocaleString()}</td>
+                    <td className="py-4 px-3 text-sm text-secondary-600">
                       {Math.round((poi.likes / poi.views) * 100)}%
                     </td>
                   </tr>
