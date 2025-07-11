@@ -31,7 +31,7 @@ export default function NewPointOfInterestPage() {
                   type="text"
                   id="name"
                   name="name"
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 sm:text-sm"
                   required
                 />
                 <p className="text-xs text-gray-500">
@@ -46,7 +46,7 @@ export default function NewPointOfInterestPage() {
                 <select
                   id="category"
                   name="category"
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 sm:text-sm"
                   required
                 >
                   <option value="">Sélectionner une catégorie</option>
@@ -68,7 +68,7 @@ export default function NewPointOfInterestPage() {
                   id="description"
                   name="description"
                   rows={4}
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 sm:text-sm"
                   required
                 ></textarea>
                 <p className="text-xs text-gray-500">
@@ -85,7 +85,7 @@ export default function NewPointOfInterestPage() {
                   step="0.000001"
                   id="latitude"
                   name="latitude"
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 sm:text-sm"
                   required
                 />
               </div>
@@ -99,7 +99,7 @@ export default function NewPointOfInterestPage() {
                   step="0.000001"
                   id="longitude"
                   name="longitude"
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 sm:text-sm"
                   required
                 />
               </div>
@@ -112,7 +112,7 @@ export default function NewPointOfInterestPage() {
                   type="text"
                   id="address"
                   name="address"
-                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
+                  className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 sm:text-sm"
                 />
               </div>
 

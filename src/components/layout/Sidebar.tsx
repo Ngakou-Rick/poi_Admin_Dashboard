@@ -11,8 +11,9 @@ import {
   ChartBarIcon,
   BellIcon,
   ChatBubbleLeftRightIcon,
-  Cog6ToothIcon,
   ArrowLeftOnRectangleIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
 } from '@heroicons/react/24/outline';
 
 interface SidebarLinkProps {
@@ -20,132 +21,158 @@ interface SidebarLinkProps {
   icon: React.ReactNode;
   label: string;
   active?: boolean;
+  collapsed: boolean;
+  badge?: number;
 }
 
-const SidebarLink: React.FC<SidebarLinkProps> = ({ href, icon, label, active }) => {
+const SidebarLink: React.FC<SidebarLinkProps> = ({ href, icon, label, active, collapsed, badge }) => {
   return (
     <Link
       href={href}
       className={cn(
-        'flex items-center gap-3 rounded-lg px-3 py-2.5 transition-all duration-150 ease-in-out group', // Increased py, added group
+        'flex items-center gap-3 rounded-lg px-3 py-2.5 transition-all duration-200 ease-in-out group relative',
         active
-          ? 'bg-primary-500 text-primary-foreground shadow-md shadow-primary-500/30' // Active: Purple bg, white text, purple shadow
-          : 'text-secondary-700 hover:text-primary-500 hover:bg-primary-500/10', // Inactive: Dark gray text, hover: purple text, light purple bg
-        label === '' ? 'justify-center' : '' // Center icon when label is hidden (collapsed)
+          ? 'bg-primary-500 text-white shadow-lg shadow-primary-500/25'
+          : 'text-gray-700 hover:text-primary-600 hover:bg-primary-50',
+        collapsed ? 'justify-center' : ''
       )}
     >
-      <div className={cn("w-5 h-5", active ? "text-primary-foreground" : "text-secondary-600 group-hover:text-primary-500")}>{icon}</div> {/* Slightly smaller icons, color adapts */}
-      {!collapsed && <span className="font-medium text-sm">{label}</span>} {/* Smaller font */}
+      <div className={cn(
+        "w-5 h-5 flex-shrink-0", 
+        active ? "text-white" : "text-gray-500 group-hover:text-primary-600"
+      )}>
+        {icon}
+      </div>
+      {!collapsed && (
+        <div className="flex items-center justify-between flex-1 min-w-0">
+          <span className="font-medium text-sm truncate">{label}</span>
+          {badge && badge > 0 && (
+            <span className="flex items-center justify-center w-5 h-5 text-xs font-medium text-white bg-red-500 rounded-full">
+              {badge > 99 ? '99+' : badge}
+            </span>
+          )}
+        </div>
+      )}
+      {collapsed && badge && badge > 0 && (
+        <span className="absolute -top-1 -right-1 flex items-center justify-center w-4 h-4 text-xs font-medium text-white bg-red-500 rounded-full">
+          {badge > 9 ? '9+' : badge}
+        </span>
+      )}
     </Link>
   );
 };
 
 export default function Sidebar() {
   const pathname = usePathname();
-  const [collapsed, setCollapsed] = useState(false); // Default to not collapsed
+  const [collapsed, setCollapsed] = useState(false);
 
   const navLinks = [
     {
       href: '/dashboard',
-      icon: <HomeIcon className="w-full h-full" />, // Use full for parent div to control size
+      icon: <HomeIcon className="w-full h-full" />,
       label: 'Tableau de bord',
+      badge: 0
     },
     {
       href: '/dashboard/points-of-interest',
       icon: <MapIcon className="w-full h-full" />,
       label: 'Points d\'intérêt',
+      badge: 0
     },
     {
       href: '/dashboard/users',
       icon: <UserGroupIcon className="w-full h-full" />,
       label: 'Utilisateurs',
+      badge: 0
     },
     {
       href: '/dashboard/statistics',
       icon: <ChartBarIcon className="w-full h-full" />,
       label: 'Statistiques',
+      badge: 0
     },
     {
       href: '/dashboard/notifications',
       icon: <BellIcon className="w-full h-full" />,
       label: 'Notifications',
+      badge: 3
     },
     {
       href: '/dashboard/chat',
       icon: <ChatBubbleLeftRightIcon className="w-full h-full" />,
       label: 'Messages',
+      badge: 1
     },
-    // Settings link removed as per typical modern dashboard design (often in user dropdown)
-    // {
-    //   href: '/dashboard/settings',
-    //   icon: <Cog6ToothIcon className="w-full h-full" />,
-    //   label: 'Paramètres',
-    // },
   ];
+
+  const isActive = (href: string) => {
+    if (href === '/dashboard') {
+      return pathname === '/dashboard';
+    }
+    return pathname.startsWith(href);
+  };
 
   return (
     <aside
       className={cn(
-        'fixed left-0 top-0 z-40 h-screen bg-secondary-50 border-r border-secondary-300 shadow-lg transition-width duration-300 ease-in-out', // Theme colors, shadow
-        collapsed ? 'w-20' : 'w-64' // Adjusted collapsed width
+        'fixed left-0 top-0 z-40 h-screen bg-white border-r border-gray-200 shadow-lg transition-all duration-300 ease-in-out',
+        collapsed ? 'w-16' : 'w-64'
       )}
     >
-      <div className="h-full flex flex-col justify-between py-6"> {/* Increased py */}
-        <div>
-          {/* Logo and Collapse Button */}
-          <div className={cn("flex items-center mb-8 px-4", collapsed ? "justify-center" : "justify-between")}>
-            {!collapsed && (
-              <Link href="/dashboard" className="text-2xl font-bold text-primary-500"> {/* Purple logo text */}
-                PoI
-              </Link>
+      <div className="h-full flex flex-col">
+        {/* Header */}
+        <div className="flex items-center justify-between p-4 border-b border-gray-100">
+          {!collapsed && (
+            <Link href="/dashboard" className="flex items-center gap-2">
+              <div className="w-8 h-8 bg-primary-500 rounded-lg flex items-center justify-center">
+                <span className="text-white font-bold text-sm">P</span>
+              </div>
+              <span className="text-xl font-bold text-gray-900">PoI Admin</span>
+            </Link>
+          )}
+          {collapsed && (
+            <div className="w-8 h-8 bg-primary-500 rounded-lg flex items-center justify-center mx-auto">
+              <span className="text-white font-bold text-sm">P</span>
+            </div>
+          )}
+          <button
+            onClick={() => setCollapsed(!collapsed)}
+            className={cn(
+              "p-1.5 rounded-lg text-gray-500 hover:bg-gray-100 hover:text-gray-700 transition-all duration-200",
+              collapsed ? "mx-auto" : ""
             )}
-            <button
-              onClick={() => setCollapsed(!collapsed)}
-              className="p-2 rounded-lg text-secondary-600 hover:bg-secondary-200 transition-colors"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="currentColor"
-                className="w-6 h-6"
-              >
-                {collapsed ? (
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"
-                  />
-                ) : (
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
-                  />
-                )}
-              </svg>
-            </button>
-          </div>
-
-          <div className="space-y-1 px-3">
-            {navLinks.map((link) => (
-              <SidebarLink
-                key={link.href}
-                href={link.href}
-                icon={link.icon}
-                label={collapsed ? '' : link.label}
-                active={pathname === link.href}
-              />
-            ))}
-          </div>
+          >
+            {collapsed ? (
+              <ChevronRightIcon className="w-4 h-4" />
+            ) : (
+              <ChevronLeftIcon className="w-4 h-4" />
+            )}
+          </button>
         </div>
 
-        <div className="px-3 mt-auto">
+        {/* Navigation */}
+        <nav className="flex-1 px-3 py-4 space-y-1">
+          {navLinks.map((link) => (
+            <SidebarLink
+              key={link.href}
+              href={link.href}
+              icon={link.icon}
+              label={link.label}
+              active={isActive(link.href)}
+              collapsed={collapsed}
+              badge={link.badge}
+            />
+          ))}
+        </nav>
+
+        {/* Footer */}
+        <div className="p-3 border-t border-gray-100">
           <SidebarLink
             href="/auth/logout"
-            icon={<ArrowLeftOnRectangleIcon className="w-6 h-6" />}
-            label={collapsed ? '' : 'Déconnexion'}
+            icon={<ArrowLeftOnRectangleIcon className="w-full h-full" />}
+            label="Déconnexion"
+            collapsed={collapsed}
+            active={false}
           />
         </div>
       </div>

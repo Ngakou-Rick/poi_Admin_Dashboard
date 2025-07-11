@@ -4,7 +4,7 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger' | 'success' | 'gradient';
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'danger' | 'success' | 'info';
   size?: 'sm' | 'md' | 'lg';
   isLoading?: boolean;
   leftIcon?: React.ReactNode;
@@ -31,36 +31,35 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     ref
   ) => {
     const variantClasses = {
-      primary: 'bg-primary-500 text-primary-foreground hover:bg-primary-600 focus-visible:ring-primary-500 shadow-sm hover:shadow-md active:scale-[0.99] transition-all duration-150',
-      secondary: 'bg-secondary-200 text-secondary-900 hover:bg-secondary-300 focus-visible:ring-secondary-500 shadow-sm hover:shadow-md active:scale-[0.99] transition-all duration-150',
-      outline: 'bg-transparent border border-secondary-400 text-secondary-700 hover:bg-secondary-100 focus-visible:ring-secondary-500 hover:border-secondary-500 active:scale-[0.99] transition-all duration-150',
-      ghost: 'bg-transparent text-secondary-700 hover:bg-secondary-200 focus-visible:ring-secondary-500 active:scale-[0.99] transition-all duration-150',
-      danger: 'bg-red-500 text-white hover:bg-red-600 focus-visible:ring-red-500 shadow-sm hover:shadow-md active:scale-[0.99] transition-all duration-150',
-      success: 'bg-green-500 text-white hover:bg-green-600 focus-visible:ring-green-500 shadow-sm hover:shadow-md active:scale-[0.99] transition-all duration-150',
-      // Removing gradient variant as per "Evitons les dégradés de couleur"
-      // gradient: 'bg-gradient-to-r from-primary-500 via-purple-500 to-pink-500 text-white hover:from-primary-600 hover:via-purple-600 hover:to-pink-600 focus:ring-primary-500 hover:shadow-lg hover:shadow-primary-500/30 active:scale-[0.98] transition-all duration-200',
+      primary: 'bg-primary-600 text-white hover:bg-primary-700 focus-visible:ring-primary-500 shadow-sm hover:shadow-md active:scale-[0.98] transition-all duration-200',
+      secondary: 'bg-gray-100 text-gray-900 hover:bg-gray-200 focus-visible:ring-gray-500 shadow-sm hover:shadow-md active:scale-[0.98] transition-all duration-200',
+      outline: 'bg-transparent border border-gray-300 text-gray-700 hover:bg-gray-50 focus-visible:ring-gray-500 hover:border-gray-400 active:scale-[0.98] transition-all duration-200',
+      ghost: 'bg-transparent text-gray-700 hover:bg-gray-100 focus-visible:ring-gray-500 active:scale-[0.98] transition-all duration-200',
+      danger: 'bg-red-600 text-white hover:bg-red-700 focus-visible:ring-red-500 shadow-sm hover:shadow-md active:scale-[0.98] transition-all duration-200',
+      success: 'bg-green-600 text-white hover:bg-green-700 focus-visible:ring-green-500 shadow-sm hover:shadow-md active:scale-[0.98] transition-all duration-200',
+      info: 'bg-blue-600 text-white hover:bg-blue-700 focus-visible:ring-blue-500 shadow-sm hover:shadow-md active:scale-[0.98] transition-all duration-200',
     };
 
     const sizeClasses = {
-      sm: 'text-xs px-3 py-1.5 rounded-lg', // Increased padding and rounded-lg
-      md: 'text-sm px-4 py-2 rounded-lg',  // Rounded-lg
-      lg: 'text-base px-6 py-3 rounded-xl', // Rounded-xl for larger buttons
+      sm: 'text-xs px-3 py-1.5 rounded-lg',
+      md: 'text-sm px-4 py-2 rounded-lg',
+      lg: 'text-base px-6 py-3 rounded-xl',
     };
 
     return (
       <button
         className={cn(
-          'inline-flex items-center justify-center font-semibold', // Changed to font-semibold
-          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-background', // Modern focus rings
+          'inline-flex items-center justify-center font-medium',
+          'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2',
           variantClasses[variant],
           sizeClasses[size],
-          glow && variant === 'primary' && 'shadow-lg shadow-primary-500/40', // Adjusted glow
-          glow && variant === 'danger' && 'shadow-lg shadow-red-500/40',
-          glow && variant === 'success' && 'shadow-lg shadow-green-500/40',
-          // glow && variant === 'gradient' && 'shadow-lg shadow-purple-500/50', // Gradient removed
+          glow && variant === 'primary' && 'shadow-lg shadow-primary-500/25',
+          glow && variant === 'danger' && 'shadow-lg shadow-red-500/25',
+          glow && variant === 'success' && 'shadow-lg shadow-green-500/25',
+          glow && variant === 'info' && 'shadow-lg shadow-blue-500/25',
           pulse && 'animate-pulse',
           isLoading && 'opacity-75 cursor-not-allowed',
-          disabled && 'opacity-60 cursor-not-allowed',
+          disabled && 'opacity-50 cursor-not-allowed',
           className
         )}
         disabled={disabled || isLoading}
@@ -89,14 +88,9 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
             ></path>
           </svg>
         )}
-        {!isLoading && leftIcon && <span className="mr-2 transition-transform group-hover:scale-110">{leftIcon}</span>}
-        <span className="relative">
-          {children}
-          {variant !== 'outline' && variant !== 'ghost' && (
-            <span className="absolute inset-0 rounded-md opacity-0 group-hover:opacity-20 bg-white transition-opacity duration-300"></span>
-          )}
-        </span>
-        {!isLoading && rightIcon && <span className="ml-2 transition-transform group-hover:scale-110">{rightIcon}</span>}
+        {!isLoading && leftIcon && <span className="mr-2">{leftIcon}</span>}
+        <span>{children}</span>
+        {!isLoading && rightIcon && <span className="ml-2">{rightIcon}</span>}
       </button>
     );
   }

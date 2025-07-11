@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
@@ -98,7 +100,7 @@ export default function UsersPage() {
                 <input
                   type="text"
                   placeholder="Rechercher..."
-                  className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-secondary-300 bg-secondary-100 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500 text-sm"
+                  className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 text-sm"
                 />
                 <div className="absolute left-3 top-1/2 -translate-y-1/2 text-secondary-500">
                   <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -108,14 +110,14 @@ export default function UsersPage() {
               </div>
               {/* Select Filters - Modernized */}
               <select
-                className="rounded-lg border-secondary-300 bg-secondary-100 shadow-sm focus:border-primary-500 focus:ring-1 focus:ring-primary-500 sm:text-sm p-2.5"
+                className="rounded-lg border-gray-300 bg-white shadow-sm focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 sm:text-sm p-2.5"
               >
                 <option value="all">Tous les rôles</option>
                 <option value="admin">Admin</option>
                 <option value="user">Utilisateur</option>
               </select>
               <select
-                className="rounded-lg border-secondary-300 bg-secondary-100 shadow-sm focus:border-primary-500 focus:ring-1 focus:ring-primary-500 sm:text-sm p-2.5"
+                className="rounded-lg border-gray-300 bg-white shadow-sm focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 sm:text-sm p-2.5"
               >
                 <option value="all">Tous les statuts</option>
                 <option value="active">Actifs</option>

@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
@@ -127,7 +129,7 @@ export default function PointsOfInterestPage() {
                 </label>
                 <select
                   id="category"
-                  className="flex-grow rounded-lg border-secondary-300 bg-secondary-100 shadow-sm focus:border-primary-500 focus:ring-1 focus:ring-primary-500 sm:text-sm p-2"
+                  className="flex-grow rounded-lg border-gray-300 bg-white shadow-sm focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 sm:text-sm p-2"
                 >
                   {categories.map((category) => (
                     <option key={category.value} value={category.value}>
@@ -142,7 +144,7 @@ export default function PointsOfInterestPage() {
                 </label>
                 <select
                   id="status"
-                  className="flex-grow rounded-lg border-secondary-300 bg-secondary-100 shadow-sm focus:border-primary-500 focus:ring-1 focus:ring-primary-500 sm:text-sm p-2"
+                  className="flex-grow rounded-lg border-gray-300 bg-white shadow-sm focus:border-primary-500 focus:ring-2 focus:ring-primary-500/20 sm:text-sm p-2"
                 >
                   <option value="all">Tous</option>
                   <option value="active">Actifs</option>

@@ -166,13 +166,6 @@ export default function StatisticsPage() {
               labels={updatedMonthlyViews.labels}
               datasets={updatedMonthlyViews.datasets}
               height={300}
-              options={{
-                scales: {
-                  y: { ticks: { color: secondaryTextColor }, grid: { color: gridColor } },
-                  x: { ticks: { color: secondaryTextColor }, grid: { color: gridColor } }
-                },
-                plugins: { legend: { labels: { color: secondaryTextColor } } }
-              }}
             />
           </CardContent>
         </Card>
@@ -184,10 +177,12 @@ export default function StatisticsPage() {
           <CardContent>
             <PieChart
               labels={categoryDistribution.labels}
-              data={categoryDistribution.data}
-              backgroundColor={pieChartColors} // Pass themed colors
+              datasets={[{
+                label: 'Points d&apos;intérêt',
+                data: categoryDistribution.data,
+                backgroundColor: pieChartColors
+              }]}
               height={300}
-              options={{ plugins: { legend: { labels: { color: secondaryTextColor } } } }}
             />
           </CardContent>
         </Card>
@@ -202,13 +197,6 @@ export default function StatisticsPage() {
             labels={updatedUserActivity.labels}
             datasets={updatedUserActivity.datasets}
             height={300}
-            options={{
-              scales: {
-                y: { ticks: { color: secondaryTextColor }, grid: { color: gridColor } },
-                x: { ticks: { color: secondaryTextColor }, grid: { color: gridColor } }
-              },
-              plugins: { legend: { labels: { color: secondaryTextColor } } }
-            }}
           />
         </CardContent>
       </Card>
@@ -222,13 +210,6 @@ export default function StatisticsPage() {
             labels={updatedPopularityByCategory.labels}
             datasets={updatedPopularityByCategory.datasets}
             height={300}
-            options={{
-              scales: {
-                y: { ticks: { color: secondaryTextColor }, grid: { color: gridColor } },
-                x: { ticks: { color: secondaryTextColor }, grid: { color: gridColor } }
-              },
-              plugins: { legend: { labels: { color: secondaryTextColor } } }
-            }}
           />
         </CardContent>
       </Card>

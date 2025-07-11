@@ -11,7 +11,7 @@ export function Card({ className, children, ...props }: CardProps) {
   return (
     <div
       className={cn(
-        'rounded-xl border border-secondary-300 bg-secondary-50 p-6 shadow-lg shadow-secondary-500/10', // More rounded, lighter border, subtle shadow
+        'rounded-xl border border-gray-200 bg-white shadow-sm hover:shadow-md transition-shadow duration-200',
         className
       )}
       {...props}
@@ -28,7 +28,7 @@ interface CardHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
 export function CardHeader({ className, children, ...props }: CardHeaderProps) {
   return (
     <div
-      className={cn('mb-5 flex items-center justify-between', className)} // Increased margin-bottom
+      className={cn('px-6 py-4 border-b border-gray-100', className)}
       {...props}
     >
       {children}
@@ -43,7 +43,7 @@ interface CardTitleProps extends React.HTMLAttributes<HTMLHeadingElement> {
 export function CardTitle({ className, children, ...props }: CardTitleProps) {
   return (
     <h3
-      className={cn('text-xl font-semibold text-secondary-900', className)} // Larger, bolder, darker text
+      className={cn('text-lg font-semibold text-gray-900', className)}
       {...props}
     >
       {children}
@@ -57,7 +57,7 @@ interface CardContentProps extends React.HTMLAttributes<HTMLDivElement> {
 
 export function CardContent({ className, children, ...props }: CardContentProps) {
   return (
-    <div className={cn('', className)} {...props}>
+    <div className={cn('px-6 py-4', className)} {...props}>
       {children}
     </div>
   );
@@ -70,7 +70,7 @@ interface CardFooterProps extends React.HTMLAttributes<HTMLDivElement> {
 export function CardFooter({ className, children, ...props }: CardFooterProps) {
   return (
     <div
-      className={cn('mt-4 flex items-center justify-between', className)}
+      className={cn('px-6 py-4 border-t border-gray-100 bg-gray-50/50', className)}
       {...props}
     >
       {children}
